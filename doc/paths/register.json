@@ -1,0 +1,43 @@
+{
+  "post": {
+    "summary": "Register a new user",
+    "tags": ["Auth"],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "name": { "type": "string", "example": "test1" },
+              "username": { "type": "string", "example": "test" },
+              "password": { "type": "string", "example": "test" }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "201": {
+        "description": "User successfully registered",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": true,
+                  "data": {
+                    "name": "user",
+                    "username": "testing"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": { "description": "Bad request" },
+      "500": { "description": "Internal service error" }
+    }
+  }
+}
