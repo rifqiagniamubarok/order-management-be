@@ -1,0 +1,92 @@
+{
+  "post": {
+    "summary": "Confirm order",
+    "tags": ["Admin - Order Management"],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "transactionId": { "type": "number", "example": 1 }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "confirm order successfuly",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": true,
+                  "data": [
+                    {
+                      "id": 1,
+                      "status": "cooking",
+                      "basket": {
+                        "customer": {
+                          "name": "salmah"
+                        },
+                        "table": {
+                          "id": 1,
+                          "number": 3
+                        },
+                        "amount": 120000,
+                        "items": [
+                          {
+                            "name": "Burger",
+                            "qty": 5,
+                            "amount": 100000,
+                            "menu": {
+                              "name": "Buger",
+                              "price": 20000
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Some input wrong"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal service error",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
