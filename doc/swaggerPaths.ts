@@ -3,6 +3,7 @@ import path from 'path';
 
 const baseUrl = {
   superadmin: '/v1/api/superadmin',
+  admin: '/v1/api/admin',
 };
 
 // Superadmin
@@ -20,6 +21,12 @@ const superadmin = {
   [`${baseUrl.superadmin}/menu/option/item`]: JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/superadmin/menu/optionItem.json'), 'utf-8')),
   [`${baseUrl.superadmin}/menu/option/item/{id}`]: JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/superadmin/menu/optionItemDetail.json'), 'utf-8')),
 };
+
+// Admin
+const admin = {
+  [`${baseUrl.admin}/auth/login`]: JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/admin/auth/login.json'), 'utf-8')),
+};
+
 const saLogin = JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/superadmin/login.json'), 'utf-8'));
 const superadminLogin = JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/superadmin/login.json'), 'utf-8'));
 
@@ -27,6 +34,8 @@ const superadminLogin = JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/s
 const paths = {
   // Superadmin
   ...superadmin,
+  // Admin
+  ...admin,
 };
 
 // Ekspor paths sebagai default
