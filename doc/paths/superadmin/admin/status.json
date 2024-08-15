@@ -1,0 +1,74 @@
+{
+  "post": {
+    "summary": "Create admin",
+    "tags": ["Superadmin - Admin Management"],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "adminId": { "type": "number", "example": 1 },
+              "isActive": { "type": "string", "example": true }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "User successfully registered",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": true,
+                  "data": {
+                    "firstName": "user",
+                    "lastName": "user",
+                    "email": "superadmin@yopmail.com",
+                    "photo": "",
+                    "role": "admin",
+                    "isActive": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Email or password wrong"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal service error",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

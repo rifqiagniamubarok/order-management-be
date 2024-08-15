@@ -1,0 +1,79 @@
+{
+  "post": {
+    "summary": "Create menu option item",
+    "tags": ["Superadmin - Menu Management"],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "menuOptionId": { "type": "number", "example": 1 },
+              "name": { "type": "string", "example": "Teriyaki" },
+              "isDefault": { "type": "boolean", "example": true }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "201": {
+        "description": "Manu option item created successfuly",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": true,
+                  "data": {
+                    "id": 1,
+                    "name": "Teriyaki",
+                    "option": {
+                      "id": 1,
+                      "name": "Sauce",
+                      "menu": {
+                        "id": 1,
+                        "name": "burger"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Some input wrong"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal service error",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,163 @@
+{
+  "get": {
+    "summary": "Get detail admin",
+    "tags": ["Superadmin - Admin Management"],
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "description": "id admin",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "example": 1
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "User successfully registered",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": true,
+                  "data": {
+                    "id": 12,
+                    "firstName": "user",
+                    "lastName": "user",
+                    "phoneNumber": "+6289032920",
+                    "email": "superadmin@yopmail.com",
+                    "photo": "",
+                    "role": "superadmin"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Some query wrong"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal service error",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "put": {
+    "summary": "Create admin",
+    "tags": ["Superadmin - Admin Management"],
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "description": "id admin",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "example": 1
+        }
+      }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "firstName": { "type": "string", "example": "test" },
+              "lastName": { "type": "string", "example": "test" },
+              "phoneNumber": { "type": "string", "example": "test" },
+              "email": { "type": "string", "example": "superadmin@yopmail.com" },
+              "password": { "type": "string", "example": "superadmin" },
+              "role": { "type": "string", "example": "admin" },
+              "isActive": { "type": "boolean", "example": true }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "User successfully registered",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": true,
+                  "data": {
+                    "id": 12,
+                    "firstName": "user",
+                    "lastName": "user",
+                    "email": "superadmin@yopmail.com",
+                    "photo": "",
+                    "role": "admin",
+                    "isActive": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Email or password wrong"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal service error",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

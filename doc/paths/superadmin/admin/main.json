@@ -1,0 +1,180 @@
+{
+  "get": {
+    "summary": "Get all admin",
+    "tags": ["Superadmin - Admin Management"],
+    "parameters": [
+      {
+        "name": "page",
+        "in": "query",
+        "description": "Page number for pagination",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "example": 1
+        }
+      },
+      {
+        "name": "pageSize",
+        "in": "query",
+        "description": "Number of records per page",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "example": 10
+        }
+      },
+      {
+        "name": "search",
+        "in": "query",
+        "description": "Search term for filtering results",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "example": "admin"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "User successfully registered",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": true,
+                  "data": [
+                    {
+                      "id": 1,
+                      "firstName": "user",
+                      "lastName": "user",
+                      "phoneNumber": "+6289032920",
+                      "email": "superadmin@yopmail.com",
+                      "photo": "",
+                      "role": "superadmin"
+                    }
+                  ],
+                  "pagination": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "nextPage": 2,
+                    "prevPage": 0,
+                    "lastPage": 4
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Some query wrong"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal service error",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "post": {
+    "summary": "Create admin",
+    "tags": ["Superadmin - Admin Management"],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "firstName": { "type": "string", "example": "test" },
+              "lastName": { "type": "string", "example": "test" },
+              "phoneNumber": { "type": "string", "example": "test" },
+              "email": { "type": "string", "example": "superadmin@yopmail.com" },
+              "password": { "type": "string", "example": "superadmin" },
+              "role": { "type": "string", "example": "admin" },
+              "isActive": { "type": "boolean", "example": true }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "User successfully registered",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": true,
+                  "data": {
+                    "id": 1,
+                    "firstName": "user",
+                    "lastName": "user",
+                    "email": "superadmin@yopmail.com",
+                    "photo": "",
+                    "role": "admin",
+                    "isActive": true
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Email or password wrong"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal service error",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

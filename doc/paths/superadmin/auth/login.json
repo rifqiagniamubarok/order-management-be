@@ -1,0 +1,74 @@
+{
+  "post": {
+    "summary": "Login superadmin",
+    "tags": ["Superadmin - Auth"],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "email": { "type": "string", "example": "superadmin@yopmail.com" },
+              "password": { "type": "string", "example": "superadmin" }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "User successfully registered",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": true,
+                  "data": {
+                    "firstName": "user",
+                    "lastName": "user",
+                    "email": "superadmin@yopmail.com",
+                    "photo": "",
+                    "role": "superadmin",
+                    "token": ""
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Email or password wrong"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal service error",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
