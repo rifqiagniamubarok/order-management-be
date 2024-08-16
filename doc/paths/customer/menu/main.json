@@ -1,0 +1,66 @@
+{
+  "get": {
+    "summary": "Get all menu",
+    "tags": ["Customer - Menu"],
+    "responses": {
+      "200": {
+        "description": "Get menu successfuly",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": true,
+                  "data": [
+                    {
+                      "id": 1,
+                      "name": "Salmon",
+                      "price": 50000
+                    }
+                  ],
+                  "pagination": {
+                    "page": 1,
+                    "pageSize": 10,
+                    "nextPage": 2,
+                    "prevPage": 0,
+                    "lastPage": 4
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Some query wrong"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal service error",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

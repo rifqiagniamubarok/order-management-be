@@ -4,6 +4,7 @@ import path from 'path';
 const baseUrl = {
   superadmin: '/v1/api/superadmin',
   admin: '/v1/api/admin',
+  customer: '/v1/api/customer',
 };
 
 // Superadmin
@@ -33,8 +34,14 @@ const admin = {
   [`${baseUrl.admin}/menu/{id}`]: JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/admin/menu/detail.json'), 'utf-8')),
 };
 
-const saLogin = JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/superadmin/login.json'), 'utf-8'));
-const superadminLogin = JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/superadmin/login.json'), 'utf-8'));
+// Customer
+const customer = {
+  [`${baseUrl.customer}/auth/login`]: JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/customer/auth/login.json'), 'utf-8')),
+  [`${baseUrl.customer}/auth/register`]: JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/customer/auth/register.json'), 'utf-8')),
+  [`${baseUrl.customer}/menu`]: JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/customer/menu/main.json'), 'utf-8')),
+  [`${baseUrl.customer}/menu/{id}`]: JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/customer/menu/detail.json'), 'utf-8')),
+  [`${baseUrl.customer}/menu/basket`]: JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/customer/menu/basket.json'), 'utf-8')),
+};
 
 // Gabungkan semua path untuk auth
 const paths = {
@@ -42,6 +49,8 @@ const paths = {
   ...superadmin,
   // Admin
   ...admin,
+  // Customer
+  ...customer,
 };
 
 // Ekspor paths sebagai default
