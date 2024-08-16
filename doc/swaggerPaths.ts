@@ -29,6 +29,8 @@ const admin = {
   [`${baseUrl.admin}/order/{id}`]: JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/admin/order/detail.json'), 'utf-8')),
   [`${baseUrl.admin}/order/confirm`]: JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/admin/order/confirm.json'), 'utf-8')),
   [`${baseUrl.admin}/order/deliver`]: JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/admin/order/deliver.json'), 'utf-8')),
+  [`${baseUrl.admin}/menu`]: JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/admin/menu/main.json'), 'utf-8')),
+  [`${baseUrl.admin}/menu/{id}`]: JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/admin/menu/detail.json'), 'utf-8')),
 };
 
 const saLogin = JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/superadmin/login.json'), 'utf-8'));
