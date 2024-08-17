@@ -1,0 +1,64 @@
+{
+  "get": {
+    "summary": "Get all Basket Item",
+    "tags": ["Customer - Basket"],
+    "responses": {
+      "200": {
+        "description": "Get menu successfuly",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": true,
+                  "data": [
+                    {
+                      "id": 1,
+                      "qty": 4,
+                      "amount": 200000,
+                      "menu": {
+                        "id": 1,
+                        "name": "Burger",
+                        "price": 50000
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Some query wrong"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal service error",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "post": {
+    "summary": "Pay item in basket",
+    "tags": ["Customer - Basket"],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "status": { "type": "string", "example": "pay" }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "204": {
+        "description": "User successfully registered",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": true,
+                  "data": {
+                    "id": 1,
+                    "table": {
+                      "id": 1,
+                      "number": 1
+                    },
+                    "totalItems": 3,
+                    "amount": 400000
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Email or password wrong"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal service error",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

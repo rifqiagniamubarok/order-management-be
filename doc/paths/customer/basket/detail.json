@@ -1,0 +1,179 @@
+{
+  "get": {
+    "summary": "Get detail basket",
+    "tags": ["Customer - Basket"],
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "description": "id basket item",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "example": 1
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Success",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": true,
+                  "data": {
+                    "id": 1,
+                    "qty": 4,
+                    "amount": 200000,
+                    "menu": {
+                      "id": 1,
+                      "name": "Burger",
+                      "price": 50000
+                    },
+                    "Option": [
+                      {
+                        "id": 1,
+                        "menuOptionId": 1,
+                        "menuOptionItemId": 1,
+                        "name": "Sauce",
+                        "value": "Teriyaki"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Some query wrong"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal service error",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "put": {
+    "summary": "Edit item in basket",
+    "tags": ["Customer - Basket"],
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "description": "id basket item",
+        "required": true,
+        "schema": {
+          "type": "integer",
+          "example": 1
+        }
+      }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "properties": {
+              "qty": { "type": "integer", "example": 1 },
+              "options": [
+                {
+                  "optionId": { "type": "integer", "example": 1 },
+                  "menuOptionId ": { "type": "integer", "example": 1 }
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "User successfully registered",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": true,
+                  "data": {
+                    "id": 1,
+                    "menu": {
+                      "id": 1,
+                      "name": "Burger"
+                    },
+                    "qty": 5,
+                    "amount": 40000,
+                    "options": [
+                      {
+                        "name": "Sauce",
+                        "value": "Teriyaki"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Bad request",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Email or password wrong"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Internal service error",
+        "content": {
+          "application/json": {
+            "examples": {
+              "SuccessResponse": {
+                "value": {
+                  "success": false,
+                  "error": "Internal server error"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

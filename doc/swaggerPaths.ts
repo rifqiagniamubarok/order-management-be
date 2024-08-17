@@ -41,6 +41,9 @@ const customer = {
   [`${baseUrl.customer}/menu`]: JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/customer/menu/main.json'), 'utf-8')),
   [`${baseUrl.customer}/menu/{id}`]: JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/customer/menu/detail.json'), 'utf-8')),
   [`${baseUrl.customer}/menu/basket`]: JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/customer/menu/basket.json'), 'utf-8')),
+  [`${baseUrl.customer}/basket`]: JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/customer/basket/main.json'), 'utf-8')),
+  [`${baseUrl.customer}/basket/{id}`]: JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/customer/basket/detail.json'), 'utf-8')),
+  [`${baseUrl.customer}/basket/pay`]: JSON.parse(fs.readFileSync(path.join(__dirname, 'paths/customer/basket/pay.json'), 'utf-8')),
 };
 
 // Gabungkan semua path untuk auth
