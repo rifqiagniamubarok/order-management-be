@@ -1,6 +1,6 @@
 import { z, ZodType } from 'zod';
 
-export class AdminValidation {
+export class AdminManagementValidation {
   static readonly CREATE: ZodType = z.object({
     firstName: z.string().min(3).max(100),
     lastName: z.string().min(3).max(100),
