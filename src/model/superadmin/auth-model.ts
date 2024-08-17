@@ -1,4 +1,5 @@
 import { Admin } from '@prisma/client';
+import { userSuperadminJwt } from '../../type/superadmin-type';
 
 export interface LoginRequest {
   email: string;
@@ -24,5 +25,16 @@ export const toLoginResponse = (user: Admin, token: string): LoginResponse => {
     photo: user.photo || null,
     role: user.role,
     token,
+  };
+};
+
+export const toJwtPayload = (user: Admin): userSuperadminJwt => {
+  return {
+    id: user.id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    phoneNumber: user.phoneNumber,
+    email: user.email,
+    role: user.role,
   };
 };
