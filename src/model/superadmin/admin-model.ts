@@ -11,6 +11,7 @@ export interface CreateRequest extends CreateResponse {
 }
 
 export interface CreateResponse {
+  id: number;
   firstName: string;
   lastName: string;
   phoneNumber: string;
@@ -20,8 +21,9 @@ export interface CreateResponse {
 }
 
 export const toCreateResponse = (user: Admin): CreateResponse => {
-  const { firstName, lastName, phoneNumber, email, role, isActive } = user;
+  const { id, firstName, lastName, phoneNumber, email, role, isActive } = user;
   return {
+    id,
     firstName,
     lastName,
     phoneNumber,
