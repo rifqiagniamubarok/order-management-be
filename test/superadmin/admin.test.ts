@@ -12,6 +12,7 @@ describe('POST superadmin/admin', () => {
   const authBaseUrl = '/v1/api/superadmin/auth';
   const baseUrl = '/v1/api/superadmin/admin';
   let token = '';
+  let id = '';
 
   it('should reject create admin if no authorization', async () => {
     const response = await supertest(web).post(`${baseUrl}`).send({
@@ -83,6 +84,8 @@ describe('POST superadmin/admin', () => {
     expect(response.body.data.role).toBe('ADMIN');
     expect(response.body.data.phoneNumber).toBe('6285190902323');
     expect(response.body.data.email).toBe('testadmin@yopmail.com');
+
+    id = response.body.data.id;
   });
 
   it('should  create super admin if request is true', async () => {
@@ -106,5 +109,51 @@ describe('POST superadmin/admin', () => {
     expect(response.body.data.role).toBe('SUPERADMIN');
     expect(response.body.data.phoneNumber).toBe('6285190902324');
     expect(response.body.data.email).toBe('testsuperadmin@yopmail.com');
+  });
+
+  it('should get all admin ', async () => {
+    const response = await supertest(web)
+      .get(`${baseUrl}`)
+      .set({ authorization: 'Bearer ' + token });
+
+    logger.debug(response.body);
+    expect(response.status).toBe(200);
+    expect(response.body.data.length).toBeGreaterThan(0);
+  });
+
+  it('should get detail admin ', async () => {
+    const response = await supertest(web)
+      .get(`${baseUrl}/${id}`)
+      .set({ authorization: 'Bearer ' + token });
+
+    logger.debug(response.body);
+    expect(response.status).toBe(200);
+    expect(response.body.data.id).toBe(id);
+  });
+
+  it('should  update admin if request is true', async () => {
+    const response = await supertest(web)
+      .put(`${baseUrl}/${id}`)
+      .set({ authorization: 'Bearer ' + token })
+      .send({
+        firstName: 'admin',
+        lastName: 'test2',
+        phoneNumber: '6285190902323',
+        role: 'ADMIN',
+        email: 'testadmin@yopmail.com',
+        password: 'adminadmin',
+        isActive: true,
+      });
+
+    logger.debug(response.body);
+    expect(response.status).toBe(200);
+    expect(response.body.data.id).toBe(id);
+    expect(response.body.data.firstName).toBe('admin');
+    expect(response.body.data.lastName).toBe('test2');
+    expect(response.body.data.role).toBe('ADMIN');
+    expect(response.body.data.phoneNumber).toBe('6285190902323');
+    expect(response.body.data.email).toBe('testadmin@yopmail.com');
+
+    id = response.body.data.id;
   });
 });
