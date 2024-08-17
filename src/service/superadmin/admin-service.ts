@@ -1,7 +1,17 @@
 import { hash } from 'bcryptjs';
 import { prismaClient } from '../../application/database';
 import { ResponseError } from '../../error/response-error';
-import { CreateRequest, CreateResponse, GetAllResponse, PaginationRequest, PaginationResponse, toCreateResponse } from '../../model/superadmin/admin-model';
+import {
+  CreateRequest,
+  CreateResponse,
+  DetailResponse,
+  EditRequest,
+  GetAllResponse,
+  PaginationRequest,
+  PaginationResponse,
+  toCreateResponse,
+  toDetailResponse,
+} from '../../model/superadmin/admin-model';
 import { AdminManagementValidation } from '../../validation/superadmin/admin-validation';
 import { Validation } from '../../validation/validation';
 
@@ -80,13 +90,44 @@ export class AdminManagementService {
     return { data, pagination };
   }
 
-  static async getDetail(id: number): Promise<CreateResponse> {
+  static async getDetail(id: number): Promise<DetailResponse> {
     const admin = await prismaClient.admin.findFirstOrThrow({
+      where: {
+        id,
+      },
+      include: {
+        createdByAdmin: true,
+        updatedByAdmin: true,
+      },
+    });
+
+    return toDetailResponse(admin);
+  }
+
+  static async edit(request: EditRequest, id: number, adminId?: number): Promise<DetailResponse> {
+    const editRequest = Validation.validate(AdminManagementValidation.EDIT, request);
+
+    await prismaClient.admin.findFirstOrThrow({
       where: {
         id,
       },
     });
 
-    return toCreateResponse(admin);
+    if (adminId) {
+      editRequest.updatedBy = adminId;
+    }
+
+    const admin = await prismaClient.admin.update({
+      where: {
+        id,
+      },
+      data: editRequest,
+      include: {
+        createdByAdmin: true,
+        updatedByAdmin: true,
+      },
+    });
+
+    return toDetailResponse(admin);
   }
 }

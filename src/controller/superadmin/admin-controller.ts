@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { SuperadminRequest } from '../../type/superadmin-type';
-import { CreateRequest, CreateResponse, PaginationRequest } from '../../model/superadmin/admin-model';
+import { CreateRequest, CreateResponse, EditRequest, PaginationRequest } from '../../model/superadmin/admin-model';
 import { AdminManagementService } from '../../service/superadmin/admin-service';
 
 export class AdminManagementController {
@@ -45,6 +45,22 @@ export class AdminManagementController {
     try {
       const id = req.params.id;
       const response = await AdminManagementService.getDetail(Number(id));
+
+      res.status(200).json({
+        success: true,
+        data: response,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async edit(req: SuperadminRequest, res: Response, next: NextFunction) {
+    try {
+      const request: EditRequest = req.body;
+      const adminId = req?.admin?.id;
+      const id = Number(req.params.id);
+      const response = await AdminManagementService.edit(request, id, adminId);
 
       res.status(200).json({
         success: true,

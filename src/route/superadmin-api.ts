@@ -10,3 +10,4 @@ superadminRoute.use(superadminAuthMiddleware);
 superadminRoute.post('/admin', AdminManagementController.create);
 superadminRoute.get('/admin', AdminManagementController.getAll);
 superadminRoute.get('/admin/:id(\\d+)', AdminManagementController.getDetail);
+superadminRoute.put('/admin/:id(\\d+)', AdminManagementController.edit);
