@@ -17,6 +17,7 @@ export interface CreateResponse {
   phoneNumber: string;
   email: string;
   role: $Enums.Role | RoleAdmin;
+  photo?: string | null;
   isActive?: boolean;
 }
 
@@ -39,7 +40,7 @@ export interface GetAllResponse {
 }
 
 export const toCreateResponse = (user: Admin): CreateResponse => {
-  const { id, firstName, lastName, phoneNumber, email, role, isActive } = user;
+  const { id, firstName, lastName, phoneNumber, email, role, photo, isActive } = user;
   return {
     id,
     firstName,
@@ -47,6 +48,7 @@ export const toCreateResponse = (user: Admin): CreateResponse => {
     phoneNumber,
     email,
     role,
+    photo,
     isActive,
   };
 };
