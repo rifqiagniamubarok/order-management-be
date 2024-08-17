@@ -5,6 +5,7 @@ import { LoginRequest, LoginResponse, toLoginResponse } from '../../model/supera
 import { AuthValidation } from '../../validation/superadmin/auth-validation';
 import { Validation } from '../../validation/validation';
 import { compare } from 'bcryptjs';
+import { userSuperadminJwt } from '../../type/superadmin-type';
 
 export class AuthService {
   static async login(request: LoginRequest): Promise<LoginResponse> {
@@ -26,7 +27,16 @@ export class AuthService {
 
     const tokenSecret = process.env.TOKEN_SECRET || 'shhhhh';
 
-    const token = sign({ id: user.id, firstName: user.firstName, lastName: user.lastName, phoneNumber: user.phoneNumber, email: user.email }, tokenSecret);
+    const tokenPayload: userSuperadminJwt = {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      phoneNumber: user.phoneNumber,
+      email: user.email,
+      role: user.role,
+    };
+
+    const token = sign(tokenPayload, tokenSecret);
 
     return toLoginResponse(user, token);
   }
