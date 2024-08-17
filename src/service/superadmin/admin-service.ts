@@ -79,4 +79,14 @@ export class AdminManagementService {
 
     return { data, pagination };
   }
+
+  static async getDetail(id: number): Promise<CreateResponse> {
+    const admin = await prismaClient.admin.findFirstOrThrow({
+      where: {
+        id,
+      },
+    });
+
+    return toCreateResponse(admin);
+  }
 }

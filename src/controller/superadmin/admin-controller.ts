@@ -40,4 +40,18 @@ export class AdminManagementController {
       next(error);
     }
   }
+
+  static async getDetail(req: SuperadminRequest, res: Response, next: NextFunction) {
+    try {
+      const id = req.params.id;
+      const response = await AdminManagementService.getDetail(Number(id));
+
+      res.status(200).json({
+        success: true,
+        data: response,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
