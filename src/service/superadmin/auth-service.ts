@@ -4,6 +4,7 @@ import { ResponseError } from '../../error/response-error';
 import { LoginRequest, LoginResponse, toLoginResponse } from '../../model/superadmin/auth-model';
 import { AuthValidation } from '../../validation/superadmin/auth-validation';
 import { Validation } from '../../validation/validation';
+import { compare } from 'bcryptjs';
 
 export class AuthService {
   static async login(request: LoginRequest): Promise<LoginResponse> {
@@ -14,6 +15,12 @@ export class AuthService {
     });
 
     if (!user) {
+      throw new ResponseError(400, 'Username or password wrong');
+    }
+
+    const isPasswordTrue = await compare(loginRequest.password, user.password);
+
+    if (!isPasswordTrue) {
       throw new ResponseError(400, 'Username or password wrong');
     }
 

@@ -11,6 +11,7 @@ export interface LoginResponse {
   email: string;
   phoneNumber: string;
   photo: string | null;
+  role: string;
   token: string;
 }
 
@@ -21,6 +22,7 @@ export const toLoginResponse = (user: Admin, token: string): LoginResponse => {
     phoneNumber: user.phoneNumber,
     email: user.email,
     photo: user.photo || null,
+    role: user.role,
     token,
   };
 };
