@@ -5,12 +5,20 @@ async function main() {
   const password = await hash('Superadmin', 10);
   const superadmin = await prisma.admin.upsert({
     where: { email: 'superadmin@yopmail.com', phoneNumber: '6285151152323' },
-    update: {},
+    update: {
+      firstName: 'superadmin',
+      lastName: 'superadmin',
+      phoneNumber: '6285151152323',
+      email: 'superadmin@yopmail.com',
+      role: 'SUPERADMIN',
+      password,
+    },
     create: {
       firstName: 'superadmin',
       lastName: 'superadmin',
       phoneNumber: '6285151152323',
       email: 'superadmin@yopmail.com',
+      role: 'SUPERADMIN',
       password,
     },
   });
