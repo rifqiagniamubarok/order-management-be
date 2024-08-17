@@ -21,3 +21,158 @@ model User {
 
   @@map("users")
 }
+
+model Admin {
+  id            Int       @id @default(autoincrement())
+  firstName     String
+  lastName      String
+  phoneNumber   String
+  email         String
+  password      String
+  photo         String?
+  role          Role      @default(ADMIN)
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  createdBy     Int?
+  updatedAt     DateTime  @updatedAt @default(now())
+  updatedBy     Int?
+
+  createdByAdmin  Admin? @relation("CreatedByAdmin", fields: [createdBy], references: [id])
+  updatedByAdmin  Admin? @relation("UpdatedByAdmin", fields: [updatedBy], references: [id])
+
+  createdAdmins   Admin[] @relation("CreatedByAdmin")
+  updatedAdmins   Admin[] @relation("UpdatedByAdmin")
+
+  menusCreated    Menu[]  @relation("CreatedMenus")
+  menusUpdated    Menu[]  @relation("UpdatedMenus")
+  menusDeleted    Menu[]  @relation("DeletedMenus")
+
+  @@map("admins")
+}
+
+model Menu {
+  id          Int       @id @default(autoincrement())
+  name        String
+  price       Int
+  isAvailable Boolean   @default(true)
+  isDelete    Boolean   @default(false)
+  deleteBy    Int?
+  createdAt   DateTime  @default(now())
+  createdBy   Int?
+  updatedAt   DateTime  @updatedAt @default(now())
+  updatedBy   Int?
+
+  createdByAdmin  Admin? @relation("CreatedMenus", fields: [createdBy], references: [id])
+  updatedByAdmin  Admin? @relation("UpdatedMenus", fields: [updatedBy], references: [id])
+  deleteByAdmin   Admin? @relation("DeletedMenus", fields: [deleteBy], references: [id])
+
+  options         MenuOption[]
+  basketItems     BasketItem[]
+}
+
+
+model Customer {
+  id          Int      @id @default(autoincrement())
+  firstName   String
+  lastName    String
+  phoneNumber String
+  email       String
+  password    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt @default(now())
+
+  basket      Basket[]
+}
+
+model MenuOption {
+  id      Int          @id @default(autoincrement())
+  menuId  Int
+  name    String
+
+  menu        Menu? @relation(fields: [menuId], references: [id])
+  optionItem  MenuOptionItem[]
+
+  basketItemOptions   BasketItemOption[]
+}
+
+model MenuOptionItem {
+  id            Int       @id @default(autoincrement())
+  menuOptionId  Int
+  name          String
+  isDefault     Boolean   @default(false)
+
+  option        MenuOption  @relation(fields: [menuOptionId], references: [id])
+
+  basketItemOptions   BasketItemOption[]
+}
+
+model Table {
+  id      Int    @id @default(autoincrement())
+  number Int
+  desc   String?
+  
+  baskets   Basket[]
+}
+
+model Basket {
+  id           Int        @id @default(autoincrement())
+  customerId   Int
+  tableId      Int?
+  amount       Int?        
+  isActive     Boolean    @default(true)
+  transactionId Int?
+
+  table         Table?  @relation(fields: [tableId], references: [id])
+  customer      Customer @relation(fields: [customerId], references: [id])
+  transaction   Transaction? @relation(fields: [transactionId], references: [id])
+
+  basketItems   BasketItem[]
+}
+
+model BasketItem {
+  id         Int       @id @default(autoincrement())
+  basketId   Int
+  menuId     Int
+  name       String
+  qty        Int
+  amount     Int?
+
+  basket     Basket   @relation(fields: [basketId], references: [id])
+  menu       Menu     @relation(fields: [menuId], references: [id])
+
+  basketItemOptions   BasketItemOption[]
+}
+
+model Transaction {
+  id        Int     @id @default(autoincrement())
+  userId    Int
+  status    Status
+  basketId  Int
+
+  basket    Basket[]
+}
+
+model BasketItemOption {
+  id              Int       @id @default(autoincrement())
+  basketItemId    Int
+  menuOptionId    Int
+  menuOptionItemId Int
+  name            String
+  value           String
+
+  basketItem          BasketItem  @relation(fields: [basketItemId], references: [id])
+  menuOption          MenuOption  @relation(fields: [menuOptionId], references: [id])
+  menuOptionItem      MenuOptionItem  @relation(fields: [menuOptionItemId], references: [id])
+}
+
+enum Role {
+  ADMIN
+  SUPERADMIN
+}
+
+enum Status {
+  WAITING_PAYMENT
+  PAID
+  COOKING
+  DELIVERY
+}
