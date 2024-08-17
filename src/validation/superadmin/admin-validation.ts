@@ -10,4 +10,10 @@ export class AdminManagementValidation {
     isActive: z.boolean().default(true).optional(),
     role: z.enum(['SUPERADMIN', 'ADMIN']),
   });
+
+  static readonly GETALL: ZodType = z.object({
+    page: z.number().default(1),
+    pageSize: z.number().default(10),
+    search: z.string().optional(),
+  });
 }

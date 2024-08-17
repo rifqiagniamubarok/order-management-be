@@ -8,3 +8,4 @@ export const superadminRoute = express.Router();
 superadminRoute.use(superadminAuthMiddleware);
 
 superadminRoute.post('/admin', AdminManagementController.create);
+superadminRoute.get('/admin', AdminManagementController.getAll);

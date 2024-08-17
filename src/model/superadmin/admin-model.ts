@@ -20,6 +20,24 @@ export interface CreateResponse {
   isActive?: boolean;
 }
 
+export interface PaginationRequest {
+  search?: string;
+  page: number;
+  pageSize: number;
+}
+
+export interface PaginationResponse extends PaginationRequest {
+  nextPage: number;
+  prevPage: number;
+  lastPage: number;
+  total: number;
+}
+
+export interface GetAllResponse {
+  data: CreateResponse[];
+  pagination: PaginationResponse;
+}
+
 export const toCreateResponse = (user: Admin): CreateResponse => {
   const { id, firstName, lastName, phoneNumber, email, role, isActive } = user;
   return {
