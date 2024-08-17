@@ -117,6 +117,10 @@ export class AdminManagementService {
       editRequest.updatedBy = adminId;
     }
 
+    if (editRequest.password) {
+      editRequest.password = await hash(editRequest.password, 10);
+    }
+
     const admin = await prismaClient.admin.update({
       where: {
         id,
