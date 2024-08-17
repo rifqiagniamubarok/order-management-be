@@ -23,11 +23,11 @@ model User {
 }
 
 model Admin {
-  id            Int       @id @default(autoincrement())
+  id            Int       @id @unique @default(autoincrement())
   firstName     String
   lastName      String
-  phoneNumber   String
-  email         String
+  phoneNumber   String    @unique
+  email         String    @unique
   password      String
   photo         String?
   role          Role      @default(ADMIN)
