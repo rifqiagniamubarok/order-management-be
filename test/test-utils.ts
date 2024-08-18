@@ -28,3 +28,20 @@ export class SuperadminTest {
     });
   }
 }
+
+export class TableTest {
+  static async delete() {
+    await prismaClient.table.deleteMany({
+      where: {
+        number: 1,
+      },
+    });
+  }
+  static async deleteBefore() {
+    await prismaClient.table.deleteMany({
+      where: {
+        number: 1000,
+      },
+    });
+  }
+}
