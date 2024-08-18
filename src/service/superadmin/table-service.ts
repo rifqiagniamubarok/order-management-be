@@ -23,11 +23,15 @@ export class TableManagementService {
   }
 
   static async getDetail(id: number): Promise<CreateResponse> {
-    const table = await prismaClient.table.findFirstOrThrow({
+    const table = await prismaClient.table.findUnique({
       where: {
         id,
       },
     });
+
+    if (!table) {
+      throw new ResponseError(404, 'Table not found');
+    }
 
     return toCreateResponse(table);
   }
