@@ -107,8 +107,8 @@ model MenuOptionItem {
 }
 
 model Table {
-  id      Int    @id @default(autoincrement())
-  number Int
+  id     Int     @id @unique @default(autoincrement())
+  number Int     @unique
   desc   String?
   
   baskets   Basket[]
