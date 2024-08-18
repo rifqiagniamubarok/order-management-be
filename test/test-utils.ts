@@ -9,3 +9,22 @@ export class UserTest {
     });
   }
 }
+
+export class AdminTest {
+  static async delete() {
+    await prismaClient.admin.deleteMany({
+      where: {
+        email: 'testadmin@yopmail.com',
+      },
+    });
+  }
+}
+export class SuperadminTest {
+  static async delete() {
+    await prismaClient.admin.deleteMany({
+      where: {
+        email: 'testsuperadmin@yopmail.com',
+      },
+    });
+  }
+}

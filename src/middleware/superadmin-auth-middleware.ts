@@ -12,6 +12,9 @@ export const superadminAuthMiddleware = async (req: SuperadminRequest, res: Resp
       const tokenSecret = process.env.TOKEN_SECRET || 'shhhhh';
 
       const decodedToken = verify(token, tokenSecret);
+      if (!decodedToken) {
+        throw new ResponseError(401, 'Unauthorized');
+      }
       const result = toDecodeSuperadminJwtResponse(decodedToken);
       if (result.role !== 'SUPERADMIN') {
         throw new ResponseError(403, 'Forbidden');
