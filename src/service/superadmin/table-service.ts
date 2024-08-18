@@ -13,4 +13,11 @@ export class TableManagementService {
 
     return toCreateResponse(table);
   }
+
+  static async getAll(): Promise<Array<CreateResponse>> {
+    const tables = await prismaClient.table.findMany();
+
+    const response = tables.map((table) => toCreateResponse(table));
+    return response;
+  }
 }

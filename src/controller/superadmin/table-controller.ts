@@ -15,4 +15,15 @@ export class TableManagementController {
       next(error);
     }
   }
+  static async getAll(req: Request, res: Response, next: NextFunction) {
+    try {
+      const response = await TableManagementService.getAll();
+      res.status(200).json({
+        success: true,
+        data: response,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
