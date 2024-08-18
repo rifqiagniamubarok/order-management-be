@@ -4,6 +4,9 @@ import { logger } from '../../src/application/logging';
 import { SuperadminTest, TableTest } from '../test-utils';
 
 describe('POST superadmin/admin', () => {
+  beforeAll(async () => {
+    await TableTest.deleteBefore();
+  });
   afterAll(async () => {
     await TableTest.delete();
   });
@@ -89,6 +92,19 @@ describe('POST superadmin/admin', () => {
     expect(response.body.data.id).toBe(id);
   });
 
+  it('should get 404 because invalid params table id', async () => {
+    const response = await supertest(web)
+      .get(`${baseUrl}/1000`)
+      .set({ authorization: 'Bearer ' + token })
+      .send({
+        desc: 'table number 1',
+      });
+
+    logger.debug(response.body);
+    expect(response.status).toBe(404);
+    expect(response.body.errors).toBeDefined();
+  });
+
   it('should get detail table', async () => {
     const response = await supertest(web)
       .put(`${baseUrl}/${id}`)
@@ -104,7 +120,7 @@ describe('POST superadmin/admin', () => {
 
   it('should get 404 because invalid params table id', async () => {
     const response = await supertest(web)
-      .put(`${baseUrl}/10000`)
+      .put(`${baseUrl}/1000`)
       .set({ authorization: 'Bearer ' + token })
       .send({
         desc: 'table number 1',
