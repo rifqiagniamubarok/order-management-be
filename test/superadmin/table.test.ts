@@ -88,4 +88,30 @@ describe('POST superadmin/admin', () => {
     expect(response.status).toBe(200);
     expect(response.body.data.id).toBe(id);
   });
+
+  it('should get detail table', async () => {
+    const response = await supertest(web)
+      .put(`${baseUrl}/${id}`)
+      .set({ authorization: 'Bearer ' + token })
+      .send({
+        desc: 'table number 1',
+      });
+
+    logger.debug(response.body);
+    expect(response.status).toBe(200);
+    expect(response.body.data.desc).toBe('table number 1');
+  });
+
+  it('should get 404 because invalid params table id', async () => {
+    const response = await supertest(web)
+      .put(`${baseUrl}/10000`)
+      .set({ authorization: 'Bearer ' + token })
+      .send({
+        desc: 'table number 1',
+      });
+
+    logger.debug(response.body);
+    expect(response.status).toBe(404);
+    expect(response.body.errors).toBeDefined();
+  });
 });
