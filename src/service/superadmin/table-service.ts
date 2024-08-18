@@ -1,5 +1,6 @@
 import { prismaClient } from '../../application/database';
-import { CreateRequest, CreateResponse, toCreateResponse } from '../../model/superadmin/table-model';
+import { ResponseError } from '../../error/response-error';
+import { CreateRequest, CreateResponse, EditRequest, toCreateResponse } from '../../model/superadmin/table-model';
 import { TableManagementValidation } from '../../validation/superadmin/table-validation';
 import { Validation } from '../../validation/validation';
 
@@ -26,6 +27,24 @@ export class TableManagementService {
       where: {
         id,
       },
+    });
+
+    return toCreateResponse(table);
+  }
+
+  static async edit(request: EditRequest, id: number): Promise<CreateResponse> {
+    const editRequest = Validation.validate(TableManagementValidation.EDIT, request);
+
+    const isTableExist = await prismaClient.table.findUnique({ where: { id } });
+    if (!isTableExist) {
+      throw new ResponseError(404, 'Table not found');
+    }
+
+    const table = await prismaClient.table.update({
+      where: {
+        id,
+      },
+      data: editRequest,
     });
 
     return toCreateResponse(table);

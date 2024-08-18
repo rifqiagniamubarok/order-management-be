@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import { CreateRequest } from '../../model/superadmin/table-model';
+import { CreateRequest, EditRequest } from '../../model/superadmin/table-model';
 import { TableManagementService } from '../../service/superadmin/table-service';
 
 export class TableManagementController {
@@ -30,6 +30,21 @@ export class TableManagementController {
     try {
       const id = Number(req.params.id);
       const response = await TableManagementService.getDetail(id);
+      res.status(200).json({
+        success: true,
+        data: response,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  static async edit(req: Request, res: Response, next: NextFunction) {
+    try {
+      const id = Number(req.params.id);
+      const request: EditRequest = req.body;
+
+      const response = await TableManagementService.edit(request, id);
       res.status(200).json({
         success: true,
         data: response,
