@@ -52,7 +52,7 @@ describe('POST superadmin/admin', () => {
     expect(response.body.errors).toBeDefined();
   });
 
-  it('should reject create table if request invalid', async () => {
+  it('should create table if request valid', async () => {
     const response = await supertest(web)
       .post(`${baseUrl}`)
       .set({ authorization: 'Bearer ' + token })
@@ -64,5 +64,28 @@ describe('POST superadmin/admin', () => {
     logger.debug(response.body);
     expect(response.status).toBe(201);
     expect(response.body.data.number).toBe(1);
+    id = response.body.data.id;
+  });
+
+  it('should get all table', async () => {
+    const response = await supertest(web)
+      .get(`${baseUrl}`)
+      .set({ authorization: 'Bearer ' + token })
+      .send();
+
+    logger.debug(response.body);
+    expect(response.status).toBe(200);
+    expect(response.body.data.length).toBeGreaterThan(0);
+  });
+
+  it('should get detail table', async () => {
+    const response = await supertest(web)
+      .get(`${baseUrl}/${id}`)
+      .set({ authorization: 'Bearer ' + token })
+      .send();
+
+    logger.debug(response.body);
+    expect(response.status).toBe(200);
+    expect(response.body.data.id).toBe(id);
   });
 });
