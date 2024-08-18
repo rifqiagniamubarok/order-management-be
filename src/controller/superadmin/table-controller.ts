@@ -26,4 +26,16 @@ export class TableManagementController {
       next(error);
     }
   }
+  static async getDetail(req: Request, res: Response, next: NextFunction) {
+    try {
+      const id = Number(req.params.id);
+      const response = await TableManagementService.getDetail(id);
+      res.status(200).json({
+        success: true,
+        data: response,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }

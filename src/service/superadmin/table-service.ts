@@ -20,4 +20,14 @@ export class TableManagementService {
     const response = tables.map((table) => toCreateResponse(table));
     return response;
   }
+
+  static async getDetail(id: number): Promise<CreateResponse> {
+    const table = await prismaClient.table.findFirstOrThrow({
+      where: {
+        id,
+      },
+    });
+
+    return toCreateResponse(table);
+  }
 }
