@@ -37,4 +37,11 @@ export class TableTest {
       },
     });
   }
+  static async deleteBefore() {
+    await prismaClient.table.deleteMany({
+      where: {
+        number: 1000,
+      },
+    });
+  }
 }
