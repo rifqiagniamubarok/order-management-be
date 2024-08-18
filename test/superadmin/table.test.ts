@@ -105,7 +105,7 @@ describe('POST superadmin/admin', () => {
     expect(response.body.errors).toBeDefined();
   });
 
-  it('should get detail table', async () => {
+  it('should edit table', async () => {
     const response = await supertest(web)
       .put(`${baseUrl}/${id}`)
       .set({ authorization: 'Bearer ' + token })
@@ -129,5 +129,26 @@ describe('POST superadmin/admin', () => {
     logger.debug(response.body);
     expect(response.status).toBe(404);
     expect(response.body.errors).toBeDefined();
+  });
+
+  it('should get 404 because invalid params table id', async () => {
+    const response = await supertest(web)
+      .delete(`${baseUrl}/1000`)
+      .set({ authorization: 'Bearer ' + token })
+      .send();
+
+    logger.debug(response.body);
+    expect(response.status).toBe(404);
+    expect(response.body.errors).toBeDefined();
+  });
+
+  it('should delete table ', async () => {
+    const response = await supertest(web)
+      .delete(`${baseUrl}/${id}`)
+      .set({ authorization: 'Bearer ' + token })
+      .send();
+
+    logger.debug(response);
+    expect(response.status).toBe(204);
   });
 });
