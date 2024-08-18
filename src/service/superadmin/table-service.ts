@@ -53,4 +53,19 @@ export class TableManagementService {
 
     return toCreateResponse(table);
   }
+
+  static async delete(id: number): Promise<void> {
+    const isTableExist = await prismaClient.table.findUnique({ where: { id } });
+    if (!isTableExist) {
+      throw new ResponseError(404, 'Table not found');
+    }
+
+    await prismaClient.table.delete({
+      where: {
+        id,
+      },
+    });
+
+    return;
+  }
 }

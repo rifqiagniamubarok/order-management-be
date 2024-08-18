@@ -18,4 +18,5 @@ superadminRoute.get('/admin', AdminManagementController.getAll);
 superadminRoute.post('/table', TableManagementController.create);
 superadminRoute.get('/table/:id(\\d+)', TableManagementController.getDetail);
 superadminRoute.put('/table/:id(\\d+)', TableManagementController.edit);
+superadminRoute.delete('/table/:id(\\d+)', TableManagementController.delete);
 superadminRoute.get('/table', TableManagementController.getAll);

@@ -53,4 +53,16 @@ export class TableManagementController {
       next(error);
     }
   }
+
+  static async delete(req: Request, res: Response, next: NextFunction) {
+    try {
+      const id = Number(req.params.id);
+      await TableManagementService.delete(id);
+      res.status(204).json({
+        success: true,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
