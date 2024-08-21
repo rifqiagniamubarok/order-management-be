@@ -11,6 +11,7 @@ export class MenuManagementService {
     createRequest.createdBy = adminId;
     const menu = await prismaClient.menu.create({
       data: createRequest,
+      include: { createdByAdmin: true },
     });
 
     return toCreateMenuResponse(menu);
