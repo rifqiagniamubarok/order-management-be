@@ -23,4 +23,4 @@ superadminRoute.delete('/table/:id(\\d+)', TableManagementController.delete);
 superadminRoute.get('/table', TableManagementController.getAll);
 
 // Menu Management
-superadminRoute.post('/table', MenuManagementController.create);
+superadminRoute.post('/menu', MenuManagementController.create);
