@@ -1,3 +1,4 @@
+import { sign } from 'jsonwebtoken';
 import { prismaClient } from '../src/application/database';
 
 export class UserTest {
@@ -26,6 +27,29 @@ export class SuperadminTest {
         email: 'testsuperadmin@yopmail.com',
       },
     });
+  }
+  static async getToken() {
+    const user = await prismaClient.admin.findFirst({
+      where: { role: 'SUPERADMIN' },
+    });
+
+    if (!user) {
+      throw '';
+    }
+
+    const tokenPayload = {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      phoneNumber: user.phoneNumber,
+      email: user.email,
+      role: user.role,
+    };
+
+    const tokenSecret = process.env.TOKEN_SECRET || 'shhhhh';
+    const token = sign(tokenPayload, tokenSecret);
+
+    return token;
   }
 }
 
