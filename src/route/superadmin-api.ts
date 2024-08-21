@@ -24,3 +24,4 @@ superadminRoute.get('/table', TableManagementController.getAll);
 
 // Menu Management
 superadminRoute.post('/menu', MenuManagementController.create);
+superadminRoute.get('/menu/:id(\\d+)', MenuManagementController.getDetail);

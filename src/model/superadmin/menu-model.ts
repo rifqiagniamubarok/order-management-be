@@ -18,6 +18,9 @@ export type CreateMenuResponse = {
   name: string;
   price: number;
   isAvailable?: boolean;
+  createdAt?: Date | null;
+  updatedAt?: Date | null;
+  isDelete?: boolean | null;
   createdByAdmin: AdminRelation | null;
   updatedByAdmin: AdminRelation | null;
   deletedByAdmin: AdminRelation | null;
@@ -35,6 +38,9 @@ export const toCreateMenuResponse = (request: MenuRelation): CreateMenuResponse 
     name: request.name,
     price: request.price,
     isAvailable: request.isAvailable ?? true,
+    isDelete: request.isDelete,
+    createdAt: request.createdAt,
+    updatedAt: request.updatedAt,
     createdByAdmin: null,
     updatedByAdmin: null,
     deletedByAdmin: null,
