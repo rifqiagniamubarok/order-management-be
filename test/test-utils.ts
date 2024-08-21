@@ -69,3 +69,13 @@ export class TableTest {
     });
   }
 }
+
+export class MenuTest {
+  static async delete(id: number) {
+    await prismaClient.menu.deleteMany({
+      where: {
+        id,
+      },
+    });
+  }
+}
