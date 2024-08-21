@@ -3,8 +3,7 @@ import { web } from '../../src/application/web';
 import { logger } from '../../src/application/logging';
 import { SuperadminTest, TableTest } from '../test-utils';
 
-describe('POST superadmin/admin', () => {
-  const authBaseUrl = '/v1/api/superadmin/auth';
+describe('POST superadmin/table', () => {
   const baseUrl = '/v1/api/superadmin/table';
   let token = '';
   let id = '';
