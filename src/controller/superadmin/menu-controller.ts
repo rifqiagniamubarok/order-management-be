@@ -22,7 +22,7 @@ export class MenuManagementController {
     try {
       const id = Number(req?.params?.id);
       const response = await MenuManagementService.getDetail(id);
-      res.status(201).json({
+      res.status(200).json({
         success: true,
         data: response,
       });
