@@ -1,7 +1,8 @@
 import { prismaClient } from '../../application/database';
 import { ResponseError } from '../../error/response-error';
-import { PaginationRequest } from '../../model/superadmin/general-model';
-import { CreateMenuRequest, CreateMenuResponse, DetailMenuResponse, toCreateMenuResponse, toDetailMenuResponse } from '../../model/superadmin/menu-model';
+import { PaginationRequest, PaginationResponse } from '../../model/general-model';
+
+import { CreateMenuRequest, CreateMenuResponse, DetailMenuResponse, GetAllMenuResponse, toCreateMenuResponse, toDetailMenuResponse } from '../../model/superadmin/menu-model';
 import { MenuManagementValidation } from '../../validation/superadmin/menu-validation';
 import { Validation } from '../../validation/validation';
 
@@ -29,5 +30,44 @@ export class MenuManagementService {
 
     return toDetailMenuResponse(menu);
   }
-  static async getAll(request: PaginationRequest): Promise<any> {}
+  static async getAll(request: PaginationRequest): Promise<GetAllMenuResponse> {
+    const paginationRequest = Validation.validate(MenuManagementValidation.GETALL, request);
+
+    const { page, pageSize, search } = paginationRequest;
+
+    let whereCondition = {};
+
+    if (search && search.trim() !== '') {
+      whereCondition = {
+        name: { contains: search, mode: 'insensitive' },
+      };
+    }
+
+    const total = await prismaClient.menu.count({
+      where: whereCondition,
+    });
+
+    const menus = await prismaClient.menu.findMany({
+      where: whereCondition,
+      skip: (page - 1) * pageSize,
+      take: pageSize,
+    });
+
+    const lastPage = Math.ceil(total / pageSize);
+    const nextPage = page < lastPage ? page + 1 : page;
+    const prevPage = page > 1 ? page - 1 : page;
+
+    const pagination: PaginationResponse = {
+      page,
+      pageSize,
+      lastPage,
+      nextPage,
+      prevPage,
+      total,
+    };
+
+    const data = menus.map((menu) => toCreateMenuResponse(menu));
+
+    return { data, pagination };
+  }
 }
