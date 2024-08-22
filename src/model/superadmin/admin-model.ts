@@ -1,4 +1,5 @@
 import { $Enums, Admin, Role } from '@prisma/client';
+import { PaginationResponse } from './general-model';
 
 export enum RoleAdmin {
   ADMIN = 'ADMIN',
@@ -43,19 +44,6 @@ export interface EditRequest {
   isActive?: boolean;
   updatedBy?: number;
   password?: string;
-}
-
-export interface PaginationRequest {
-  search?: string;
-  page: number;
-  pageSize: number;
-}
-
-export interface PaginationResponse extends PaginationRequest {
-  nextPage: number;
-  prevPage: number;
-  lastPage: number;
-  total: number;
 }
 
 export interface GetAllResponse {
