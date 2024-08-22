@@ -7,12 +7,14 @@ describe('POST superadmin/menu', () => {
   const baseUrl = '/v1/api/superadmin/menu';
   let token = '';
   let id: number;
+  let idForNotFound: number = 1000;
 
   beforeAll(async () => {
     const getToken = await SuperadminTest.getToken();
     if (getToken) {
       token = getToken;
     }
+    await MenuTest.delete(idForNotFound);
   });
 
   afterAll(async () => {
@@ -84,5 +86,16 @@ describe('POST superadmin/menu', () => {
     logger.debug(response.body);
     expect(response.status).toBe(200);
     expect(response.body.data.length).toBeGreaterThan(1);
+  });
+
+  it('should create table if request valid', async () => {
+    const response = await supertest(web)
+      .get(`${baseUrl}/${idForNotFound}`)
+      .set({ authorization: 'Bearer ' + token })
+      .send();
+
+    logger.debug(response.body);
+    expect(response.status).toBe(404);
+    expect(response.body.errors).toBeDefined();
   });
 });
