@@ -1,4 +1,5 @@
 import { Admin, Menu } from '@prisma/client';
+import { PaginationResponse } from './general-model';
 
 export interface CreateMenuRequest {
   name: string;
@@ -18,6 +19,14 @@ export type CreateMenuResponse = {
   name: string;
   price: number;
   isAvailable?: boolean;
+  isDelete?: boolean | null;
+};
+
+export type DetailMenuResponse = {
+  id: number;
+  name: string;
+  price: number;
+  isAvailable?: boolean;
   createdAt?: Date | null;
   updatedAt?: Date | null;
   isDelete?: boolean | null;
@@ -32,8 +41,25 @@ export interface MenuRelation extends Menu {
   deletedByAdmin?: Admin | null;
 }
 
-export const toCreateMenuResponse = (request: MenuRelation): CreateMenuResponse => {
+export interface GetAllMenuResponse {
+  data: CreateMenuResponse[];
+  pagination: PaginationResponse;
+}
+
+export const toCreateMenuResponse = (request: Menu): CreateMenuResponse => {
   const response: CreateMenuResponse = {
+    id: request.id,
+    name: request.name,
+    price: request.price,
+    isAvailable: request.isAvailable ?? true,
+    isDelete: request.isDelete,
+  };
+
+  return response;
+};
+
+export const toDetailMenuResponse = (request: MenuRelation): DetailMenuResponse => {
+  const response: DetailMenuResponse = {
     id: request.id,
     name: request.name,
     price: request.price,
