@@ -4,7 +4,7 @@ import { ResponseError } from '../../error/response-error';
 import { CreateRequest, CreateResponse, DetailResponse, EditRequest, GetAllResponse, toCreateResponse, toDetailResponse } from '../../model/superadmin/admin-model';
 import { AdminManagementValidation } from '../../validation/superadmin/admin-validation';
 import { Validation } from '../../validation/validation';
-import { PaginationRequest, PaginationResponse } from '../../model/superadmin/general-model';
+import { PaginationRequest, PaginationResponse } from '../../model/general-model';
 
 export class AdminManagementService {
   static async create(request: CreateRequest, adminId?: number): Promise<CreateResponse> {

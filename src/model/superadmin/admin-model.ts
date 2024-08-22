@@ -1,5 +1,5 @@
 import { $Enums, Admin, Role } from '@prisma/client';
-import { PaginationResponse } from './general-model';
+import { PaginationResponse } from '../general-model';
 
 export enum RoleAdmin {
   ADMIN = 'ADMIN',

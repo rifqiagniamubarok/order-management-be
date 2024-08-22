@@ -1,5 +1,5 @@
 import { Admin, Menu } from '@prisma/client';
-import { PaginationResponse } from './general-model';
+import { PaginationResponse } from '../general-model';
 
 export interface CreateMenuRequest {
   name: string;

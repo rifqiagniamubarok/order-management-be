@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import { SuperadminRequest } from '../../type/superadmin-type';
-import { CreateRequest, CreateResponse, EditRequest, PaginationRequest } from '../../model/superadmin/admin-model';
+import { CreateRequest, EditRequest } from '../../model/superadmin/admin-model';
 import { AdminManagementService } from '../../service/superadmin/admin-service';
+import { PaginationRequest } from '../../model/general-model';
 
 export class AdminManagementController {
   static async create(req: SuperadminRequest, res: Response, next: NextFunction) {
