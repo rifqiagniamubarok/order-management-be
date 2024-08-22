@@ -74,4 +74,15 @@ describe('POST superadmin/menu', () => {
     expect(response.body.data.name).toBe('Bakso');
     id = response.body.data.id;
   });
+
+  it('should get all table if request valid', async () => {
+    const response = await supertest(web)
+      .get(`${baseUrl}`)
+      .set({ authorization: 'Bearer ' + token })
+      .send();
+
+    logger.debug(response.body);
+    expect(response.status).toBe(200);
+    expect(response.body.data.length).toBeGreaterThan(1);
+  });
 });
