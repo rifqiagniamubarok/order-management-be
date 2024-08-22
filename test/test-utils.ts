@@ -1,3 +1,4 @@
+import { sign } from 'jsonwebtoken';
 import { prismaClient } from '../src/application/database';
 
 export class UserTest {
@@ -27,6 +28,29 @@ export class SuperadminTest {
       },
     });
   }
+  static async getToken() {
+    const user = await prismaClient.admin.findFirst({
+      where: { role: 'SUPERADMIN' },
+    });
+
+    if (!user) {
+      throw '';
+    }
+
+    const tokenPayload = {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      phoneNumber: user.phoneNumber,
+      email: user.email,
+      role: user.role,
+    };
+
+    const tokenSecret = process.env.TOKEN_SECRET || 'shhhhh';
+    const token = sign(tokenPayload, tokenSecret);
+
+    return token;
+  }
 }
 
 export class TableTest {
@@ -41,6 +65,16 @@ export class TableTest {
     await prismaClient.table.deleteMany({
       where: {
         number: 1000,
+      },
+    });
+  }
+}
+
+export class MenuTest {
+  static async delete(id: number) {
+    await prismaClient.menu.deleteMany({
+      where: {
+        id,
       },
     });
   }
