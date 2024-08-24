@@ -26,3 +26,7 @@ superadminRoute.get('/table', TableManagementController.getAll);
 superadminRoute.post('/menu', MenuManagementController.create);
 superadminRoute.get('/menu/:id(\\d+)', MenuManagementController.getDetail);
 superadminRoute.get('/menu', MenuManagementController.getAll);
+superadminRoute.post('/menu/option', MenuManagementController.createOption);
+superadminRoute.put('/menu/option/:id(\\d+)', MenuManagementController.editOption);
+superadminRoute.post('/menu/option/item', MenuManagementController.createOptionItem);
+superadminRoute.put('/menu/option/item/:id(\\d+)', MenuManagementController.editOptionItem);

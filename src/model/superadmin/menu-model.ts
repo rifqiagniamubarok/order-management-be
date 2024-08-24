@@ -1,4 +1,4 @@
-import { Admin, Menu } from '@prisma/client';
+import { Admin, Menu, MenuOption } from '@prisma/client';
 import { PaginationResponse } from '../general-model';
 
 export interface CreateMenuRequest {
@@ -44,6 +44,24 @@ export interface MenuRelation extends Menu {
 export interface GetAllMenuResponse {
   data: CreateMenuResponse[];
   pagination: PaginationResponse;
+}
+
+export interface CreateMenuOptionRequest {
+  menuId: number;
+  name: string;
+}
+export interface EditMenuOptionRequest {
+  name?: string;
+}
+export interface CreateMenuOptionItemRequest {
+  menuOptionId: number;
+  name: string;
+  isDefault?: boolean;
+}
+
+export interface EditMenuOptionItemRequest {
+  name?: string;
+  isDefault?: boolean;
 }
 
 export const toCreateMenuResponse = (request: Menu): CreateMenuResponse => {

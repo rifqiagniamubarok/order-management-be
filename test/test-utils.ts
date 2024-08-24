@@ -20,6 +20,15 @@ export class AdminTest {
     });
   }
 }
+export class CustomerTest {
+  static async delete(email: string) {
+    await prismaClient.customer.deleteMany({
+      where: {
+        email,
+      },
+    });
+  }
+}
 export class SuperadminTest {
   static async delete() {
     await prismaClient.admin.deleteMany({
@@ -73,6 +82,20 @@ export class TableTest {
 export class MenuTest {
   static async delete(id: number) {
     await prismaClient.menu.deleteMany({
+      where: {
+        id,
+      },
+    });
+  }
+  static async deleteOption(id: number) {
+    await prismaClient.menuOption.deleteMany({
+      where: {
+        id,
+      },
+    });
+  }
+  static async deleteOptionItem(id: number) {
+    await prismaClient.menuOptionItem.deleteMany({
       where: {
         id,
       },
