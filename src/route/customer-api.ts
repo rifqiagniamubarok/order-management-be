@@ -8,3 +8,4 @@ customerRoute.use(CustomerAuthMiddleware);
 
 // Menu
 customerRoute.get('/menu', MenuController.getAll);
+customerRoute.get('/menu/:id(\\d+)', MenuController.getDetail);

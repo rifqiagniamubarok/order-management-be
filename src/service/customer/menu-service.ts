@@ -1,5 +1,6 @@
 import { prismaClient } from '../../application/database';
-import { GetMenuResponse, toMenuResponse } from '../../model/customer/menu-model';
+import { ResponseError } from '../../error/response-error';
+import { GetMenuResponse, MenuDetailResponse, toMenuDetailResponse, toMenuResponse } from '../../model/customer/menu-model';
 import { PaginationRequest, PaginationResponse } from '../../model/general-model';
 import { Validation } from '../../validation/validation';
 
@@ -53,5 +54,25 @@ export class MenuService {
     const data = menus.map((menu) => toMenuResponse(menu));
 
     return { data, pagination };
+  }
+  static async getDetail(id: number): Promise<MenuDetailResponse> {
+    const menu = await prismaClient.menu.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        options: {
+          include: {
+            optionItem: true,
+          },
+        },
+      },
+    });
+
+    if (!menu) {
+      throw new ResponseError(404, 'Menu not found');
+    }
+
+    return toMenuDetailResponse(menu);
   }
 }

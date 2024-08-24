@@ -18,4 +18,17 @@ export class MenuController {
       next(error);
     }
   }
+  static async getDetail(req: CustomerRequest, res: Response, next: NextFunction) {
+    try {
+      const id: number = Number(req.params.id);
+      const response = await MenuService.getDetail(id);
+
+      res.status(200).json({
+        success: true,
+        data: response,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
