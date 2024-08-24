@@ -16,6 +16,7 @@ describe('POST superadmin/menu', () => {
       token = getToken;
     }
     await MenuTest.delete(idForNotFound);
+    await MenuTest.deleteOption(idForNotFound);
   });
 
   afterAll(async () => {
@@ -120,6 +121,31 @@ describe('POST superadmin/menu', () => {
       .set({ authorization: 'Bearer ' + token })
       .send({
         menuId: idForNotFound,
+        name: 'Which sausage?',
+      });
+
+    logger.error(response.body);
+    expect(response.status).toBe(404);
+    expect(response.body.errors).toBeDefined();
+  });
+  it('should edit table if request valid', async () => {
+    const response = await supertest(web)
+      .put(`${baseUrl}/option/${idOption}`)
+      .set({ authorization: 'Bearer ' + token })
+      .send({
+        menuId: id,
+        name: 'Extra?',
+      });
+
+    logger.error(response.body);
+    expect(response.status).toBe(200);
+    expect(response.body.data.name).toBe('Extra?');
+  });
+  it('should error edit menu option if id menu invalid', async () => {
+    const response = await supertest(web)
+      .put(`${baseUrl}/option/${idForNotFound}`)
+      .set({ authorization: 'Bearer ' + token })
+      .send({
         name: 'Which sausage?',
       });
 
