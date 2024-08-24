@@ -18,6 +18,7 @@ describe('POST superadmin/menu', () => {
     }
     await MenuTest.delete(idForNotFound);
     await MenuTest.deleteOption(idForNotFound);
+    await MenuTest.deleteOptionItem(idForNotFound);
   });
 
   afterAll(async () => {
@@ -181,6 +182,31 @@ describe('POST superadmin/menu', () => {
 
     logger.error(response.body);
     expect(response.status).toBe(400);
+    expect(response.body.errors).toBeDefined();
+  });
+  it('should edit menu option item if request valid', async () => {
+    const response = await supertest(web)
+      .put(`${baseUrl}/option/item/${idOptionItem}`)
+      .set({ authorization: 'Bearer ' + token })
+      .send({
+        name: 'potato chips',
+      });
+
+    logger.error(response.body);
+    expect(response.status).toBe(200);
+    expect(response.body.data.name).toBe('potato chips');
+    expect(response.body.data.idDefault).toBeFalsy();
+  });
+  it('should edit menu option item if request valid', async () => {
+    const response = await supertest(web)
+      .put(`${baseUrl}/option/item/${idForNotFound}`)
+      .set({ authorization: 'Bearer ' + token })
+      .send({
+        name: 'potato chips',
+      });
+
+    logger.error(response.body);
+    expect(response.status).toBe(404);
     expect(response.body.errors).toBeDefined();
   });
 });
