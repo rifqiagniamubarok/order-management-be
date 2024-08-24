@@ -1,6 +1,6 @@
 import { Customer } from '@prisma/client';
 
-export interface registerRequest {
+export interface RegisterRequest {
   firstName: string;
   lastName: string;
   phoneNumber: string;
@@ -8,13 +8,35 @@ export interface registerRequest {
   password: string;
 }
 
-export interface registerResponse {
+export interface RegisterResponse {
   firstName: string;
   lastName: string;
   email: string;
 }
 
-export const toRegisterResponse = (customer: Customer): registerResponse => {
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
+export interface LoginResponse {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  token: string;
+}
+
+export const toLoginResponse = (user: Customer, token: string): LoginResponse => {
+  return {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    phoneNumber: user.phoneNumber,
+    email: user.email,
+    token,
+  };
+};
+
+export const toRegisterResponse = (customer: Customer): RegisterResponse => {
   return {
     firstName: customer.firstName,
     lastName: customer.lastName,

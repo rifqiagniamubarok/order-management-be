@@ -13,3 +13,4 @@ publicRouter.post('/superadmin/auth/login', AuthController.login);
 
 // Customer
 publicRouter.post('/customer/auth/register', AuthCustomerController.register);
+publicRouter.post('/customer/auth/login', AuthCustomerController.login);
