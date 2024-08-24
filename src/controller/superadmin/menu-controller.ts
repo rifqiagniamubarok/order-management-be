@@ -1,5 +1,5 @@
 import { NextFunction, Response, Request } from 'express';
-import { CreateMenuOptionRequest, CreateMenuRequest } from '../../model/superadmin/menu-model';
+import { CreateMenuOptionItemRequest, CreateMenuOptionRequest, CreateMenuRequest } from '../../model/superadmin/menu-model';
 import { MenuManagementService } from '../../service/superadmin/menu-service';
 import { SuperadminRequest } from '../../type/superadmin-type';
 import { PaginationRequest } from '../../model/general-model';
@@ -73,6 +73,19 @@ export class MenuManagementController {
       const response = await MenuManagementService.editOption(request, id);
 
       res.status(200).json({
+        success: true,
+        data: response,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+  static async createOptionItem(req: SuperadminRequest, res: Response, next: NextFunction) {
+    try {
+      const request: CreateMenuOptionItemRequest = req.body;
+      const response = await MenuManagementService.createOptionItem(request);
+
+      res.status(201).json({
         success: true,
         data: response,
       });

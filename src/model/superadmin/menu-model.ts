@@ -53,6 +53,16 @@ export interface CreateMenuOptionRequest {
 export interface EditMenuOptionRequest {
   name?: string;
 }
+export interface CreateMenuOptionItemRequest {
+  menuOptionId: number;
+  name: string;
+  isDefault?: boolean;
+}
+
+export interface EditMenuOptionItemRequest {
+  name?: string;
+  isDefault?: boolean;
+}
 
 export const toCreateMenuResponse = (request: Menu): CreateMenuResponse => {
   const response: CreateMenuResponse = {

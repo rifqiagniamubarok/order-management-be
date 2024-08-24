@@ -1,9 +1,10 @@
-import { MenuOption } from '@prisma/client';
+import { MenuOption, MenuOptionItem } from '@prisma/client';
 import { prismaClient } from '../../application/database';
 import { ResponseError } from '../../error/response-error';
 import { PaginationRequest, PaginationResponse } from '../../model/general-model';
 
 import {
+  CreateMenuOptionItemRequest,
   CreateMenuOptionRequest,
   CreateMenuRequest,
   CreateMenuResponse,
@@ -115,5 +116,22 @@ export class MenuManagementService {
     const menu = await prismaClient.menuOption.update({ where: { id }, data: createRequest });
 
     return menu;
+  }
+  static async createOptionItem(request: CreateMenuOptionItemRequest): Promise<MenuOptionItem> {
+    const createRequest = Validation.validate(MenuManagementValidation.CREATEOPTIONITEM, request);
+
+    const isOptionExist = await prismaClient.menuOption.findUnique({
+      where: { id: createRequest.menuOptionId },
+    });
+
+    if (!isOptionExist) {
+      throw new ResponseError(404, 'Menu option not found');
+    }
+
+    const optionItem = await prismaClient.menuOptionItem.create({
+      data: createRequest,
+    });
+
+    return optionItem;
   }
 }
