@@ -170,4 +170,17 @@ describe('POST superadmin/menu', () => {
     expect(response.body.data.idDefault).toBeFalsy();
     idOptionItem = response.body.data.id;
   });
+  it('should fail menu option item if request invalid', async () => {
+    const response = await supertest(web)
+      .post(`${baseUrl}/option/item`)
+      .set({ authorization: 'Bearer ' + token })
+      .send({
+        menuOptionId: idOption,
+        name: '',
+      });
+
+    logger.error(response.body);
+    expect(response.status).toBe(400);
+    expect(response.body.errors).toBeDefined();
+  });
 });
