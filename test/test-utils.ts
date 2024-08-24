@@ -20,6 +20,15 @@ export class AdminTest {
     });
   }
 }
+export class CustomerTest {
+  static async delete(email: string) {
+    await prismaClient.customer.deleteMany({
+      where: {
+        email,
+      },
+    });
+  }
+}
 export class SuperadminTest {
   static async delete() {
     await prismaClient.admin.deleteMany({
