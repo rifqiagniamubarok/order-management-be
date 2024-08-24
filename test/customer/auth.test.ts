@@ -4,7 +4,7 @@ import { web } from '../../src/application/web';
 import { CustomerTest } from '../test-utils';
 
 describe('POST customer/auth', () => {
-  const baseUrl = '/v1/api/customer/auth';
+  const baseUrl = '/api/v1/customer/auth';
   const email: string = 'customerss@yopmail.com';
 
   afterAll(async () => {

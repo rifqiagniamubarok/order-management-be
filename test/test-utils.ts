@@ -1,5 +1,6 @@
 import { sign } from 'jsonwebtoken';
 import { prismaClient } from '../src/application/database';
+import { toSignToken } from '../src/utils/jwt-utils';
 
 export class UserTest {
   static async delete() {
@@ -28,6 +29,25 @@ export class CustomerTest {
       },
     });
   }
+  static async getToken() {
+    const user = await prismaClient.customer.findFirst();
+
+    if (!user) {
+      throw '';
+    }
+
+    const tokenPayload = {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      phoneNumber: user.phoneNumber,
+      email: user.email,
+    };
+
+    const token = toSignToken(tokenPayload);
+
+    return token;
+  }
 }
 export class SuperadminTest {
   static async delete() {
@@ -55,8 +75,7 @@ export class SuperadminTest {
       role: user.role,
     };
 
-    const tokenSecret = process.env.TOKEN_SECRET || 'shhhhh';
-    const token = sign(tokenPayload, tokenSecret);
+    const token = toSignToken(tokenPayload);
 
     return token;
   }

@@ -2,9 +2,9 @@ import fs from 'fs';
 import path from 'path';
 
 const baseUrl = {
-  superadmin: '/v1/api/superadmin',
-  admin: '/v1/api/admin',
-  customer: '/v1/api/customer',
+  superadmin: '/api/v1/superadmin',
+  admin: '/api/v1/admin',
+  customer: '/api/v1/customer',
 };
 
 // Superadmin

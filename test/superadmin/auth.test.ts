@@ -3,7 +3,7 @@ import { logger } from '../../src/application/logging';
 import { web } from '../../src/application/web';
 
 describe('POST superadmin/auth', () => {
-  const baseUrl = '/v1/api/superadmin/auth';
+  const baseUrl = '/api/v1/superadmin/auth';
   it('should reject login admin if request is invalid', async () => {
     const response = await supertest(web).post(`${baseUrl}/login`).send({
       email: '',

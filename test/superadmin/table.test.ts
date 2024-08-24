@@ -4,7 +4,7 @@ import { logger } from '../../src/application/logging';
 import { SuperadminTest, TableTest } from '../test-utils';
 
 describe('POST superadmin/table', () => {
-  const baseUrl = '/v1/api/superadmin/table';
+  const baseUrl = '/api/v1/superadmin/table';
   let token = '';
   let id = '';
 

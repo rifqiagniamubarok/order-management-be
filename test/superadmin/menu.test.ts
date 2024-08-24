@@ -4,7 +4,7 @@ import { web } from '../../src/application/web';
 import { logger } from '../../src/application/logging';
 
 describe('POST superadmin/menu', () => {
-  const baseUrl = '/v1/api/superadmin/menu';
+  const baseUrl = '/api/v1/superadmin/menu';
   let token = '';
   let id: number;
   let idOption: number;

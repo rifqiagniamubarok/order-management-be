@@ -8,7 +8,7 @@ describe('POST /api/users', () => {
     await UserTest.delete();
   });
   it('should reject register new user if request is invalid', async () => {
-    const response = await supertest(web).post('/v1/api/auth/register').send({
+    const response = await supertest(web).post('/api/v1/auth/register').send({
       name: '',
       username: '',
       password: '',
@@ -20,7 +20,7 @@ describe('POST /api/users', () => {
   });
 
   it('should register new user', async () => {
-    const response = await supertest(web).post('/v1/api/auth/register').send({
+    const response = await supertest(web).post('/api/v1/auth/register').send({
       name: 'test',
       username: 'test',
       password: 'test',
@@ -33,7 +33,7 @@ describe('POST /api/users', () => {
   });
 
   it('should reject login user if request is invalid', async () => {
-    const response = await supertest(web).post('/v1/api/auth/login').send({
+    const response = await supertest(web).post('/api/v1/auth/login').send({
       username: '',
       password: '',
     });
@@ -44,7 +44,7 @@ describe('POST /api/users', () => {
   });
 
   it('should login user', async () => {
-    const response = await supertest(web).post('/v1/api/auth/login').send({
+    const response = await supertest(web).post('/api/v1/auth/login').send({
       username: 'test',
       password: 'test',
     });
@@ -57,7 +57,7 @@ describe('POST /api/users', () => {
   });
 
   it('should fail login user because already exist', async () => {
-    const response = await supertest(web).post('/v1/api/auth/register').send({
+    const response = await supertest(web).post('/api/v1/auth/register').send({
       username: 'test',
       password: 'test',
     });
