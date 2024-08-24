@@ -7,4 +7,4 @@ export const customerRoute = express.Router();
 customerRoute.use(CustomerAuthMiddleware);
 
 // Menu
-customerRoute.get('/', MenuController.getAll);
+customerRoute.get('/menu', MenuController.getAll);
