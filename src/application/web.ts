@@ -10,7 +10,7 @@ export const web = express();
 web.use(express.json());
 setupSwagger(web);
 
-web.use('/v1/api', publicRouter);
-web.use('/v1/api/superadmin', superadminRoute);
-web.use('/v1/api/customer', customerRoute);
+web.use('/api/v1', publicRouter);
+web.use('/api/v1/superadmin', superadminRoute);
+web.use('/api/v1/customer', customerRoute);
 web.use(errorMiddleware);

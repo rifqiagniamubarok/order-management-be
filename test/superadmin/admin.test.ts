@@ -9,8 +9,8 @@ describe('POST superadmin/admin', () => {
     await SuperadminTest.delete();
   });
 
-  const authBaseUrl = '/v1/api/superadmin/auth';
-  const baseUrl = '/v1/api/superadmin/admin';
+  const authBaseUrl = '/api/v1/superadmin/auth';
+  const baseUrl = '/api/v1/superadmin/admin';
   let token = '';
   let id = '';
 

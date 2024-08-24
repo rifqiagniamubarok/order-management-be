@@ -4,7 +4,7 @@ import { web } from '../../src/application/web';
 import { logger } from '../../src/application/logging';
 
 describe('POST customer/menu', () => {
-  const baseUrl = '/v1/api/customer/menu';
+  const baseUrl = '/api/v1/customer/menu';
   let token: string;
 
   beforeAll(async () => {
