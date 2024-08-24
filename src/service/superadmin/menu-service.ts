@@ -1,8 +1,17 @@
+import { MenuOption } from '@prisma/client';
 import { prismaClient } from '../../application/database';
 import { ResponseError } from '../../error/response-error';
 import { PaginationRequest, PaginationResponse } from '../../model/general-model';
 
-import { CreateMenuRequest, CreateMenuResponse, DetailMenuResponse, GetAllMenuResponse, toCreateMenuResponse, toDetailMenuResponse } from '../../model/superadmin/menu-model';
+import {
+  CreateMenuOptionRequest,
+  CreateMenuRequest,
+  CreateMenuResponse,
+  DetailMenuResponse,
+  GetAllMenuResponse,
+  toCreateMenuResponse,
+  toDetailMenuResponse,
+} from '../../model/superadmin/menu-model';
 import { MenuManagementValidation } from '../../validation/superadmin/menu-validation';
 import { Validation } from '../../validation/validation';
 
@@ -69,5 +78,24 @@ export class MenuManagementService {
     const data = menus.map((menu) => toCreateMenuResponse(menu));
 
     return { data, pagination };
+  }
+  static async createOption(request: CreateMenuOptionRequest): Promise<MenuOption> {
+    const createRequest = Validation.validate(MenuManagementValidation.CREATEOPTION, request);
+
+    const isMenuExist = await prismaClient.menu.findUnique({
+      where: {
+        id: createRequest.menuId,
+      },
+    });
+
+    if (!isMenuExist) {
+      throw new ResponseError(404, 'Menu not found');
+    }
+
+    const menu = await prismaClient.menuOption.create({
+      data: createRequest,
+    });
+
+    return menu;
   }
 }

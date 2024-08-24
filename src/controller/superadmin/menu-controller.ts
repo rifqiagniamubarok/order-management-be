@@ -1,5 +1,5 @@
 import { NextFunction, Response, Request } from 'express';
-import { CreateMenuRequest } from '../../model/superadmin/menu-model';
+import { CreateMenuOptionRequest, CreateMenuRequest } from '../../model/superadmin/menu-model';
 import { MenuManagementService } from '../../service/superadmin/menu-service';
 import { SuperadminRequest } from '../../type/superadmin-type';
 import { PaginationRequest } from '../../model/general-model';
@@ -46,6 +46,20 @@ export class MenuManagementController {
       res.status(200).json({
         success: true,
         ...response,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+  static async createOption(req: SuperadminRequest, res: Response, next: NextFunction) {
+    try {
+      const request: CreateMenuOptionRequest = req.body;
+
+      const response = await MenuManagementService.createOption(request);
+
+      res.status(201).json({
+        success: true,
+        data: response,
       });
     } catch (error) {
       next(error);
