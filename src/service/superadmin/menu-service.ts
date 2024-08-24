@@ -9,6 +9,7 @@ import {
   CreateMenuRequest,
   CreateMenuResponse,
   DetailMenuResponse,
+  EditMenuOptionItemRequest,
   EditMenuOptionRequest,
   GetAllMenuResponse,
   toCreateMenuResponse,
@@ -101,7 +102,7 @@ export class MenuManagementService {
     return menu;
   }
   static async editOption(request: EditMenuOptionRequest, id: number): Promise<MenuOption> {
-    const createRequest = Validation.validate(MenuManagementValidation.EDITOPTION, request);
+    const editRequest = Validation.validate(MenuManagementValidation.EDITOPTION, request);
 
     const isOptionExist = await prismaClient.menuOption.findUnique({
       where: {
@@ -113,7 +114,7 @@ export class MenuManagementService {
       throw new ResponseError(404, 'Menu option not found');
     }
 
-    const menu = await prismaClient.menuOption.update({ where: { id }, data: createRequest });
+    const menu = await prismaClient.menuOption.update({ where: { id }, data: editRequest });
 
     return menu;
   }
@@ -130,6 +131,24 @@ export class MenuManagementService {
 
     const optionItem = await prismaClient.menuOptionItem.create({
       data: createRequest,
+    });
+
+    return optionItem;
+  }
+  static async editOptionItem(request: EditMenuOptionItemRequest, id: number): Promise<MenuOptionItem> {
+    const editRequest = Validation.validate(MenuManagementValidation.EDITOPTIONITEM, request);
+
+    const isOptionItemExist = await prismaClient.menuOptionItem.findUnique({
+      where: { id },
+    });
+
+    if (!isOptionItemExist) {
+      throw new ResponseError(404, 'Menu option item not found');
+    }
+
+    const optionItem = await prismaClient.menuOptionItem.update({
+      where: { id },
+      data: editRequest,
     });
 
     return optionItem;
