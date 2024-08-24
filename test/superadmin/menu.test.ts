@@ -8,6 +8,7 @@ describe('POST superadmin/menu', () => {
   let token = '';
   let id: number;
   let idOption: number;
+  let idOptionItem: number;
   let idForNotFound: number = 1000;
 
   beforeAll(async () => {
@@ -21,7 +22,8 @@ describe('POST superadmin/menu', () => {
 
   afterAll(async () => {
     await MenuTest.delete(id);
-    await MenuTest.deleteOption(id);
+    await MenuTest.deleteOption(idOption);
+    await MenuTest.deleteOptionItem(idOptionItem);
   });
 
   it('should reject create table if no authorization', async () => {
@@ -152,5 +154,20 @@ describe('POST superadmin/menu', () => {
     logger.error(response.body);
     expect(response.status).toBe(404);
     expect(response.body.errors).toBeDefined();
+  });
+  it('should add menu option item if request valid', async () => {
+    const response = await supertest(web)
+      .post(`${baseUrl}/option/item`)
+      .set({ authorization: 'Bearer ' + token })
+      .send({
+        menuOptionId: idOption,
+        name: 'rice',
+      });
+
+    logger.error(response.body);
+    expect(response.status).toBe(201);
+    expect(response.body.data.name).toBe('rice');
+    expect(response.body.data.idDefault).toBeFalsy();
+    idOptionItem = response.body.data.id;
   });
 });
