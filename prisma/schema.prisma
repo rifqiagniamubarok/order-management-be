@@ -51,7 +51,7 @@ model Admin {
 }
 
 model Menu {
-  id          Int       @id @default(autoincrement())
+  id          Int       @id @unique @default(autoincrement())
   name        String
   price       Int
   isAvailable Boolean   @default(true)
@@ -85,7 +85,7 @@ model Customer {
 }
 
 model MenuOption {
-  id      Int          @id @default(autoincrement())
+  id      Int          @id @unique @default(autoincrement())
   menuId  Int
   name    String
 
@@ -96,7 +96,7 @@ model MenuOption {
 }
 
 model MenuOptionItem {
-  id            Int       @id @default(autoincrement())
+  id            Int       @id @unique @default(autoincrement())
   menuOptionId  Int
   name          String
   isDefault     Boolean   @default(false)
