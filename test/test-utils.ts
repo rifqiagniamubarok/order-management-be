@@ -78,4 +78,11 @@ export class MenuTest {
       },
     });
   }
+  static async deleteOption(id: number) {
+    await prismaClient.menuOption.deleteMany({
+      where: {
+        id,
+      },
+    });
+  }
 }
