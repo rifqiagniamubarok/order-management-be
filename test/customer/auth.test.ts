@@ -49,8 +49,17 @@ describe('POST customer/auth', () => {
       password: 'customercustomer',
     });
 
-    console.log({ err: response.body });
+    logger.debug(response.body);
     expect(response.status).toBe(409);
+    expect(response.body.errors).toBeDefined();
+  });
+  it('should login if request is valid', async () => {
+    const response = await supertest(web).post(`${baseUrl}/login`).send({
+      email: email,
+      password: 'customer',
+    });
+
+    expect(response.status).toBe(401);
     expect(response.body.errors).toBeDefined();
   });
 });
