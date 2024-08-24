@@ -8,6 +8,7 @@ import {
   CreateMenuRequest,
   CreateMenuResponse,
   DetailMenuResponse,
+  EditMenuOptionRequest,
   GetAllMenuResponse,
   toCreateMenuResponse,
   toDetailMenuResponse,
@@ -95,6 +96,23 @@ export class MenuManagementService {
     const menu = await prismaClient.menuOption.create({
       data: createRequest,
     });
+
+    return menu;
+  }
+  static async editOption(request: EditMenuOptionRequest, id: number): Promise<MenuOption> {
+    const createRequest = Validation.validate(MenuManagementValidation.EDITOPTION, request);
+
+    const isOptionExist = await prismaClient.menuOption.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!isOptionExist) {
+      throw new ResponseError(404, 'Menu option not found');
+    }
+
+    const menu = await prismaClient.menuOption.update({ where: { id }, data: createRequest });
 
     return menu;
   }

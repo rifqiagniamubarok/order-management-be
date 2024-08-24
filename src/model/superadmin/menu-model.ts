@@ -50,6 +50,9 @@ export interface CreateMenuOptionRequest {
   menuId: number;
   name: string;
 }
+export interface EditMenuOptionRequest {
+  name?: string;
+}
 
 export const toCreateMenuResponse = (request: Menu): CreateMenuResponse => {
   const response: CreateMenuResponse = {

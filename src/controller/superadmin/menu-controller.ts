@@ -65,4 +65,19 @@ export class MenuManagementController {
       next(error);
     }
   }
+  static async editOption(req: SuperadminRequest, res: Response, next: NextFunction) {
+    try {
+      const request: CreateMenuOptionRequest = req.body;
+      const id = Number(req.params.id);
+
+      const response = await MenuManagementService.editOption(request, id);
+
+      res.status(200).json({
+        success: true,
+        data: response,
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
 }
