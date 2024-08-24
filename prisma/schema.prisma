@@ -72,11 +72,11 @@ model Menu {
 
 
 model Customer {
-  id          Int      @id @default(autoincrement())
+  id          Int      @id @unique @default(autoincrement())
   firstName   String
   lastName    String
-  phoneNumber String
-  email       String
+  phoneNumber String  @unique
+  email       String  @unique    
   password    String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt @default(now())
