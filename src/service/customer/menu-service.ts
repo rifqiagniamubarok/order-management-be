@@ -10,7 +10,7 @@ interface WhereCondition {
 }
 
 export class MenuService {
-  static async register(request: PaginationRequest): Promise<GetMenuResponse> {
+  static async getAll(request: PaginationRequest): Promise<GetMenuResponse> {
     const paginationRequest = Validation.validate(Validation.PAGINATION, request);
 
     const { page, pageSize, search } = paginationRequest;
