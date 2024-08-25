@@ -1,7 +1,8 @@
 import { prismaClient } from '../../application/database';
 import { ResponseError } from '../../error/response-error';
-import { GetMenuResponse, MenuDetailResponse, toMenuDetailResponse, toMenuResponse } from '../../model/customer/menu-model';
+import { GetMenuResponse, MenuBasketItemOptionRequest, MenuBasketItemRequest, MenuDetailResponse, toMenuDetailResponse, toMenuResponse } from '../../model/customer/menu-model';
 import { PaginationRequest, PaginationResponse } from '../../model/general-model';
+import { MenuValidation } from '../../validation/customer/menu-validation';
 import { Validation } from '../../validation/validation';
 
 interface WhereCondition {
@@ -74,5 +75,41 @@ export class MenuService {
     }
 
     return toMenuDetailResponse(menu);
+  }
+  static async menuToBasket(request: MenuBasketItemRequest, userId: number): Promise<any> {
+    const basketRequest = Validation.validate(MenuValidation.MENUTOBASKET, request);
+
+    const menuExist = await prismaClient.menu.count({ where: { id: basketRequest.menuId } });
+    if (menuExist == 0) {
+      throw new ResponseError(404, 'Menu not found');
+    }
+
+    const menuOptionExist = await prismaClient.menuOption.count({ where: { menuId: basketRequest.menuId } });
+    if (menuOptionExist > 0 && !basketRequest.basketItemOptions) {
+      throw new ResponseError(400, 'Should include option');
+    }
+
+    if (basketRequest.basketItemOptions) {
+      const idOfOptions = basketRequest.basketItemOptions.map((item: MenuBasketItemOptionRequest): number => item.optionId);
+      const idOfOptionItems = basketRequest.basketItemOptions.map((item: MenuBasketItemOptionRequest): number => item.optionItemId);
+    }
+
+    let basket = await prismaClient.basket.findFirst({
+      where: {
+        customerId: userId,
+        isActive: true,
+      },
+    });
+
+    if (!basket) {
+      basket = await prismaClient.basket.create({
+        data: {
+          customerId: userId,
+          tableId: basketRequest.tableId,
+        },
+      });
+    }
+
+    // need continue
   }
 }

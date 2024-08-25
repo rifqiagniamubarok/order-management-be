@@ -37,6 +37,18 @@ interface MenuRequest extends Menu {
   options?: MenuOptionRequest[];
 }
 
+export interface MenuBasketItemOptionRequest {
+  optionId: number;
+  optionItemId: number;
+}
+
+export interface MenuBasketItemRequest {
+  menuId: number;
+  qty: number;
+  tableId: number;
+  basketItemOptions?: MenuBasketItemOptionRequest[] | null;
+}
+
 export const toMenuResponse = ({ id, name, price }: Menu): MenuResponse => {
   return {
     id,
