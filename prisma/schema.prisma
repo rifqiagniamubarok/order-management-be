@@ -115,10 +115,10 @@ model Table {
 }
 
 model Basket {
-  id           Int        @id @default(autoincrement())
+  id           Int        @id @unique @default(autoincrement())
   customerId   Int
   tableId      Int?
-  amount       Int?        
+  amount       Int?       @default(0)
   isActive     Boolean    @default(true)
   transactionId Int?
 
@@ -130,7 +130,7 @@ model Basket {
 }
 
 model BasketItem {
-  id         Int       @id @default(autoincrement())
+  id         Int       @id @unique @default(autoincrement())
   basketId   Int
   menuId     Int
   name       String
@@ -153,7 +153,7 @@ model Transaction {
 }
 
 model BasketItemOption {
-  id              Int       @id @default(autoincrement())
+  id              Int       @id @unique @default(autoincrement())
   basketItemId    Int
   menuOptionId    Int
   menuOptionItemId Int
